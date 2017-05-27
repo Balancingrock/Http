@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Swiftfire
 //
-//  Version:    0.0.1
+//  Version:    0.0.3
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,6 +48,7 @@
 //
 // History
 //
+// 0.0.3 - Renamed 'Operation' to 'Method'
 // 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
 // =====================================================================================================================
 
@@ -62,7 +63,7 @@ public final class Request: CustomStringConvertible {
     
     // The types of available operations
     
-    public enum Operation: String {
+    public enum Method: String {
         case get = "GET"
         case head = "HEAD"
         case post = "POST"
@@ -73,7 +74,7 @@ public final class Request: CustomStringConvertible {
         
         // If operations are added, be sure to include them in "allValues".
         
-        public static let all: Array<Operation> = [.get, .head, .post, .put, .delete, .trace, .connect]
+        public static let all: Array<Method> = [.get, .head, .post, .put, .delete, .trace, .connect]
     }
 
     
@@ -119,7 +120,7 @@ public final class Request: CustomStringConvertible {
         ///
         /// - Returns: nil if the requested field is not present, otherwise the string after the ':' sign of the request field, without leading or trailing blanks
         
-        public func getFieldValue(from line: String) -> String? {
+        public func value(from line: String) -> String? {
             
             
             // Split the string in request and value
@@ -275,16 +276,15 @@ public final class Request: CustomStringConvertible {
         // Add the get dictionary to the service info
         
         if dict.count > 0 { return dict } else { return nil }
-
     }
     
     
-    /// Returns the operation or nil if none present
+    /// Returns the method or nil if none present
     
-    public lazy var operation: Operation? = {
-        for t in Operation.all {
-            let operatorRange = self.lines[0].range(of: t.rawValue, options: NSString.CompareOptions(), range: nil, locale: nil)
-            if let range = operatorRange {
+    public lazy var method: Method? = {
+        for t in Method.all {
+            let methodRange = self.lines[0].range(of: t.rawValue, options: NSString.CompareOptions(), range: nil, locale: nil)
+            if let range = methodRange {
                 if range.lowerBound == self.lines[0].startIndex { return t }
             }
         }
@@ -309,7 +309,7 @@ public final class Request: CustomStringConvertible {
     
     /// Returns the version of the http header or nil if it cannot be found
     
-    public lazy var httpVersion: Version? = {
+    public lazy var version: Version? = {
         
         
         // The first line should in 3 parts: Operation, url and version
@@ -344,7 +344,7 @@ public final class Request: CustomStringConvertible {
         
         for (index, line) in self.unprocessedLines.enumerated() {
             
-            if let str = Request.Field.contentType.getFieldValue(from: line) {
+            if let str = Request.Field.contentType.value(from: line) {
                 
                 self.unprocessedLines.remove(at: index)
                 
@@ -353,7 +353,6 @@ public final class Request: CustomStringConvertible {
         }
         
         return nil
- 
     }()
     
     
@@ -363,7 +362,7 @@ public final class Request: CustomStringConvertible {
         
         for (index, line) in self.unprocessedLines.enumerated() {
             
-            if let str = Request.Field.contentLength.getFieldValue(from: line) {
+            if let str = Request.Field.contentLength.value(from: line) {
 
                 self.unprocessedLines.remove(at: index)
                 
@@ -382,7 +381,7 @@ public final class Request: CustomStringConvertible {
         
         for (index, line) in self.unprocessedLines.enumerated() {
             
-            if let str = Request.Field.connection.getFieldValue(from: line) {
+            if let str = Request.Field.connection.value(from: line) {
                 
                 self.unprocessedLines.remove(at: index)
                 
@@ -404,7 +403,7 @@ public final class Request: CustomStringConvertible {
        
         for (index, line) in self.unprocessedLines.enumerated() {
             
-            if let val = Request.Field.host.getFieldValue(from: line) {
+            if let val = Request.Field.host.value(from: line) {
                                 
                 let values = val.components(separatedBy: ":")
                 
