@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Swiftfire
 //
-//  Version:    0.0.3
+//  Version:    0.0.4
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,6 +48,8 @@
 //
 // History
 //
+// 0.0.4 - Rewrote the initializer
+//         Renamed payload to body
 // 0.0.3 - Renamed 'Operation' to 'Method'
 // 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
 // =====================================================================================================================
@@ -185,14 +187,14 @@ public final class Request: CustomStringConvertible {
     public let headerLength: Int
     
     
-    /// The payload (if there is any)
+    /// The body (if there is any)
     
-    public var payload: Data?
+    public var body: Data!
     
     
     /// - Note: The headerLength is not used internally, its just a place to keep this information handy - if necessary.
     
-    public init(lines: [String], headerLength: Int) {
+    private init(lines: [String], headerLength: Int) {
         self.lines = lines
         self.unprocessedLines = lines
         if lines.count > 1 {
@@ -202,9 +204,11 @@ public final class Request: CustomStringConvertible {
     }
     
     
-    /// Returns a HTTP header from the given data if the data contains a complete header. Otherwise returns nil.
+    /// Deserialises a new Request from the given data if the data contains a complete header. Otherwise returns nil. Also removes any data that was used to create the request.
+    ///
+    /// The body will contain the available data, but may be incomplete if the data is insufficient. Compare the contentLength with the body.count to verify if the body is complete or not.
     
-    public convenience init?(data: Data) {
+    public convenience init?(_ data: inout Data) {
         
         // Check if the header is complete by searching for the end of the CRLFCRLF sequence
         guard let endOfHeaderRange = data.range(of: Request.endOfHeaderSequence) else { return nil }
@@ -219,7 +223,21 @@ public final class Request: CustomStringConvertible {
         // Set the headerlength
         let length = endOfHeaderRange.upperBound
         
+        // Create header
         self.init(lines: headerLines, headerLength: length)
+        
+        // Create body
+        let bodyLength = self.contentLength
+        let requestLength = headerLength + bodyLength
+        if requestLength > data.count {
+            let bodyRange = Range(uncheckedBounds: (lower: headerLength, upper: data.count))
+            body = data.subdata(in: bodyRange)
+            data.removeAll(keepingCapacity: true)
+        } else {
+            let bodyRange = Range(uncheckedBounds: (lower: headerLength, upper: headerLength + contentLength))
+            body = data.subdata(in: bodyRange)
+            data.removeSubrange(Range(uncheckedBounds: (lower: 0, upper: headerLength + contentLength)))
+        }
     }
     
     
@@ -227,7 +245,7 @@ public final class Request: CustomStringConvertible {
     
     public var copy: Request {
         let cp = Request(lines: self.lines, headerLength: self.headerLength)
-        cp.payload = self.payload
+        cp.body = self.body
         // Don't copy the lazy variables, they will be recreated when necessary.
         return cp
     }

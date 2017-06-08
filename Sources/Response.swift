@@ -3,7 +3,7 @@
 //  File:       HttpResponse.swift
 //  Project:    Swiftfire
 //
-//  Version:    0.0.1
+//  Version:    0.0.4
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,6 +48,8 @@
 //
 // History
 //
+// 0.0.4 - Code streamlining
+//       - Renamed payload to body
 // 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
 // =====================================================================================================================
 
@@ -330,7 +332,7 @@ public final class Response: CustomStringConvertible {
     
     /// The HTTP code for the response, *must* be set before creating the response data
     
-    public var code: Response.Code?
+    public var code: Code?
     
     
     /// The date of the response, defaults to the current date/time if not set.
@@ -373,9 +375,9 @@ public final class Response: CustomStringConvertible {
     }
 
     
-    /// The payload data to be added to the response
+    /// The body data to be added to the response
     
-    public var payload: Data?
+    public var body: Data?
     
     private func addContentLength(size: Int) -> String {
         return "Content-Length: \(size)" + CRLFCRLF
@@ -389,20 +391,20 @@ public final class Response: CustomStringConvertible {
     public var data: Data? {
         
         assert (code != nil)
-        assert (payload != nil)
+        assert (body != nil)
         
         var header: String = "\(version?.rawValue ?? "") \(code?.rawValue ?? "")" + CRLF
         header.append(addDate())
         header.append(addServer())
         header.append(addContentType())
         header.append(addCookies())
-        header.append(addContentLength(size: payload?.count ?? 0))
+        header.append(addContentLength(size: body?.count ?? 0))
         
         var data: Data? = header.data(using: String.Encoding.utf8)
         
         assert (data != nil)
         
-        if let payload = self.payload { data?.append(payload) }
+        if let payload = self.body { data?.append(payload) }
         
         return data
     }
@@ -428,7 +430,7 @@ public final class Response: CustomStringConvertible {
         content.append("<html><head><title>\(code?.rawValue ?? "Unknown")</title></head>" + CRLF)
         content.append("<body>\(message)</body></html>" + CRLF)
         
-        self.payload = content.data(using: String.Encoding.utf8, allowLossyConversion: true)
+        self.body = content.data(using: String.Encoding.utf8, allowLossyConversion: true)
     }
     
     
@@ -447,7 +449,7 @@ public final class Response: CustomStringConvertible {
             cookies.forEach({ str += "  \($0)\n" })
         }
         str += " Server: \(server ?? "Not set")\n"
-        str += " Payload: \(payload?.count ?? 0) bytes"
+        str += " Payload: \(body?.count ?? 0) bytes"
         return str
     }
 }

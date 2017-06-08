@@ -12,6 +12,19 @@ Note: Planned releases are for information only and subject to change without no
 
 - To accompany Swiftfire 1.0.0
 
-#### 0.0.1 (Current)
+#### 0.0.4 (Current)
+
+- Rewrote initializer for Request
+- Renamed 'payload' to 'body'
+
+#### 0.0.3
+
+- Renamed 'Operation' to 'Method'
+
+#### 0.0.2
+
+- Added mime types
+
+#### 0.0.1
 
 - Initial release, spun out from Swiftfire.
