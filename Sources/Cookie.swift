@@ -1,9 +1,9 @@
 // =====================================================================================================================
 //
 //  File:       Cookie.swift
-//  Project:    Swiftfire
+//  Project:    Http
 //
-//  Version:    0.0.1
+//  Version:    0.0.5
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,6 +48,7 @@
 //
 // History
 //
+// 0.0.5 - Added comments
 // 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
 // =====================================================================================================================
 
@@ -62,8 +63,12 @@ import Foundation
 public final class Cookie: CustomStringConvertible {
     
     
+    /// An array of cookies
+    
     public typealias Cookies = Array<Cookie>
 
+    
+    // Used when no cookies are present
     
     private static let noCookies = Cookies()
 
@@ -126,11 +131,11 @@ public final class Cookie: CustomStringConvertible {
     /// - Parameters:
     ///   - name: The name of the cookie.
     ///   - value: The value of the cookie.
-    ///   - expiration: An optional expiration date.
-    ///   - path: An optional path that specifies where the cookie must be used.
-    ///   - domain: An optional domain for which the cookie may be used.
-    ///   - secure: An optional flag that will limit the cookie to secure connections.
-    ///   - httpOnly: An optional flag that limits the cookie to HTTP only.
+    ///   - expiration: (Optional) An expiration date.
+    ///   - path: (Optional) A path that specifies where the cookie must be used.
+    ///   - domain: (Optional) A domain for which the cookie may be used.
+    ///   - secure: (Optional) A flag that will limit the cookie to secure connections.
+    ///   - httpOnly: (Optional) A flag that limits the cookie to HTTP only.
     
     public init(name: String, value: String, timeout: Timeout? = nil, path: String? = nil, domain: String? = nil, secure: Bool? = nil, httpOnly: Bool? = nil) {
 
@@ -146,8 +151,10 @@ public final class Cookie: CustomStringConvertible {
     }
         
     
-    /// For the HTTP request. Reads the cookies that are included in a HTTP header line.
-    
+    /// Returns the cookies in the given line, if any. Used to deserialize the cookies from an HTTP request.
+    ///
+    /// - Parameter string: The line that may contain cookies. Should be formed as per [RFC6265](https://tools.ietf.org/html/rfc6265)
+
     public static func factory(string: String?) -> Cookies {
         
         
@@ -211,10 +218,15 @@ public final class Cookie: CustomStringConvertible {
         }
     }
     
+
+    /// The CustomStringConvertible protocol
     
-    /// Creates a description, is used by the HTTP response to create a cookie setting.
+    public var description: String { return cookieCreationCode }
     
-    public var description: String {
+    
+    /// Returns the string used to create the cookie on a client.
+    
+    public var cookieCreationCode: String {
         var str = "Set-Cookie: \(name)=\(value)"
         switch timeout {
         case nil: break
@@ -229,7 +241,7 @@ public final class Cookie: CustomStringConvertible {
     }
     
     
-    /// Creates an expired "copy" of self.
+    /// - Returns: an expired "copy" of self.
     
     public func expired() -> Cookie {
         let invalidDate = Date().addingTimeInterval(TimeInterval(-24*60*60))

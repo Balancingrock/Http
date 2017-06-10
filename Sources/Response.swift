@@ -1,9 +1,9 @@
 // =====================================================================================================================
 //
 //  File:       HttpResponse.swift
-//  Project:    Swiftfire
+//  Project:    Http
 //
-//  Version:    0.0.4
+//  Version:    0.0.5
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,6 +48,8 @@
 //
 // History
 //
+// 0.0.5 - Comment updates
+//       - Renamed createErrorPayload to createErrorMessageInBody
 // 0.0.4 - Code streamlining
 //       - Renamed payload to body
 // 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
@@ -59,6 +61,9 @@ import Foundation
 /// This class is used to create the HTTP response data.
 
 public final class Response: CustomStringConvertible {
+    
+    
+    /// The return code associated with a response.
     
     public enum Code: String {
         
@@ -320,7 +325,7 @@ public final class Response: CustomStringConvertible {
     public static let docTypeHtml401Transitional = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"
     
     
-    /// Enable public instantiation
+    /// Creates a new Response.
     
     public init() {}
     
@@ -386,7 +391,7 @@ public final class Response: CustomStringConvertible {
     
     /// Create a response from the members that have been assigned previously.
     ///
-    /// - Note: The code and payload *must* be set before calling this function. The version and contentType should be set.
+    /// - Note: The code and payload *must* be set before accessing this member-function. The version and contentType should be set.
     
     public var data: Data? {
         
@@ -410,13 +415,13 @@ public final class Response: CustomStringConvertible {
     }
     
     
-    /// Create a payload with an error message in it. If no error message is given, a simple default message will be generated.
+    /// Create a body with an error message in it. If no error message is given, a default message will be generated.
     ///
     /// - Note: A 'code' *must* be set before this function is called.
     ///
     /// - Parameter message: Optional message.
     
-    public func createErrorPayload(message: String? = nil) {
+    public func createErrorMessageInBody(message: String? = nil) {
         
         
         // Create default message if no message is given.
@@ -424,7 +429,7 @@ public final class Response: CustomStringConvertible {
         let message = message ?? "HTTP Request rejected with: \(code?.rawValue ?? "Unknown")"
         
         
-        // Create the payload
+        // Create the body
         
         var content: String = Response.docTypeHtml401Transitional + CRLF
         content.append("<html><head><title>\(code?.rawValue ?? "Unknown")</title></head>" + CRLF)

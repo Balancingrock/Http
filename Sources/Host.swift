@@ -1,9 +1,9 @@
 // =====================================================================================================================
 //
 //  File:       Host.swift
-//  Project:    Swiftfire
+//  Project:    Http
 //
-//  Version:    0.0.1
+//  Version:    0.0.5
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,15 +48,19 @@
 //
 // History
 //
+// 0.0.5 - Added comments and code streamlining.
 // 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
 // =====================================================================================================================
 
 import Foundation
 
 
-// A host is a combination of address and port.
+/// A host is a combination of address and port.
 
-public struct Host: Equatable {
+public struct Host: Equatable, CustomStringConvertible {
+    
+    
+    /// Implements the equatable protocol.
     
     public static func == (lhs: Host, rhs: Host) -> Bool {
         if lhs.address != rhs.address { return false }
@@ -69,11 +73,27 @@ public struct Host: Equatable {
         }
     }
 
+    
+    /// The address of this host.
+    
     public let address: String
+    
+    
+    /// The port number of this host.
     
     public let port: String?
     
+    
+    /// Implements the CustomStringConvertible
+    
     public var description: String { return address + (port == nil ? "" : ":\(port!)") }
+    
+    
+    /// Creates a new host.
+    ///
+    /// - Parameters:
+    ///   - address: A string with the address of the host.
+    ///   - port: A string with the port number on which the host must be contacted.
     
     public init(address: String, port: String?) {
         self.address = address

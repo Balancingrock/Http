@@ -1,9 +1,9 @@
 // =====================================================================================================================
 //
 //  File:       HttpVersion.swift
-//  Project:    Swiftfire
+//  Project:    Http
 //
-//  Version:    0.0.1
+//  Version:    0.0.5
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,6 +48,7 @@
 //
 // History
 //
+// 0.0.5 - Documentation update
 // 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
 // =====================================================================================================================
 

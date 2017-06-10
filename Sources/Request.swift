@@ -1,9 +1,9 @@
 // =====================================================================================================================
 //
 //  File:       Request.swift
-//  Project:    Swiftfire
+//  Project:    Http
 //
-//  Version:    0.0.4
+//  Version:    0.0.5
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,6 +48,7 @@
 //
 // History
 //
+// 0.0.5 - Improved documentation
 // 0.0.4 - Rewrote the initializer
 //         Renamed payload to body
 // 0.0.3 - Renamed 'Operation' to 'Method'
@@ -58,12 +59,12 @@ import Foundation
 import Ascii
 
 
-/// This class encodes the http request and offers functions to access its content.
+/// This class encodes/decodes an HTTP request.
 
 public final class Request: CustomStringConvertible {
     
     
-    // The types of available operations
+    /// The available methods.
     
     public enum Method: String {
         case get = "GET"
@@ -192,7 +193,7 @@ public final class Request: CustomStringConvertible {
     public var body: Data!
     
     
-    /// - Note: The headerLength is not used internally, its just a place to keep this information handy - if necessary.
+    // - Note: The headerLength is not used internally, its just a place to keep this information handy - if necessary.
     
     private init(lines: [String], headerLength: Int) {
         self.lines = lines
@@ -204,29 +205,43 @@ public final class Request: CustomStringConvertible {
     }
     
     
-    /// Deserialises a new Request from the given data if the data contains a complete header. Otherwise returns nil. Also removes any data that was used to create the request.
+    /// Deserialises a new Request from the given data if the data contains a complete header. Otherwise returns nil. Removes any data that was used to create the request.
     ///
     /// The body will contain the available data, but may be incomplete if the data is insufficient. Compare the contentLength with the body.count to verify if the body is complete or not.
+    ///
+    /// - Parameter data: The HTTP request encoded as an UTF8 string.
+    ///
+    /// - Returns: If an HTTP Request header was found it will be stripped from the input data including any body data that may be present. If no HTTP request header was found it will be returned unaltered.
     
     public convenience init?(_ data: inout Data) {
         
+        
         // Check if the header is complete by searching for the end of the CRLFCRLF sequence
+        
         guard let endOfHeaderRange = data.range(of: Request.endOfHeaderSequence) else { return nil }
         
+        
         // Convert the header to lines
+        
         let headerRange = Range(uncheckedBounds: (lower: 0, upper: endOfHeaderRange.lowerBound))
         guard let headerString = String(data: data.subdata(in: headerRange), encoding: String.Encoding.utf8) else {
             return nil
         }
         let headerLines = headerString.components(separatedBy: CRLF)
         
+        
         // Set the headerlength
+        
         let length = endOfHeaderRange.upperBound
         
+        
         // Create header
+        
         self.init(lines: headerLines, headerLength: length)
         
+        
         // Create body
+        
         let bodyLength = self.contentLength
         let requestLength = headerLength + bodyLength
         if requestLength > data.count {

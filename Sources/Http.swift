@@ -1,9 +1,9 @@
 // =====================================================================================================================
 //
 //  File:       Http.swift
-//  Project:    Swiftfire
+//  Project:    Http
 //
-//  Version:    0.0.2
+//  Version:    0.0.5
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -48,6 +48,7 @@
 //
 // History
 //
+// 0.0.5 - Added comments
 // 0.0.2 - Added mime types
 // 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
 // =====================================================================================================================
@@ -55,12 +56,12 @@
 import Foundation
 
 
-// The normal line endings
+/// The normal line endings
 
 public let CRLF = "\r\n"
 
 
-// The ending of the header
+/// The ending of the header
 
 public let CRLFCRLF = "\r\n\r\n"
 
@@ -71,13 +72,16 @@ public let mimeTypeHtml = "text/html"
 
 
 /// If no mime type can be determined, the default mime type can be used.
+///
 /// - Note: intendend usage: let mime = mimeTypeForExtension("bla") ?? mimeTypeDefault
 
 public let mimeTypeDefault = "application/octet-stream"
 
 
 /// Returns the MIME type for the extension of the given URL.
-/// - Parameter url: The url for which to determine the mime type.
+///
+/// - Parameter forUrl: The url for which to determine the mime type.
+///
 /// - Returns: The string representing the mime type, or nil if no match could be made.
 
 public func mimeType(forUrl url: URL) -> String? {
@@ -86,7 +90,9 @@ public func mimeType(forUrl url: URL) -> String? {
 
 
 /// Returns the MIME type for the extension of the given file path.
-/// - Parameter fp: The file path for which to determine the mime type.
+///
+/// - Parameter forPath: The file path for which to determine the mime type.
+///
 /// - Returns: The string representing the mime type, or nil if no match could be made.
 
 public func mimeType(forPath: String) -> String? {
@@ -95,7 +101,9 @@ public func mimeType(forPath: String) -> String? {
 
 
 /// Returns the MIME type for the given file extension.
-/// - Parameter ext: The file extension for which to determine the mime type.
+///
+/// - Parameter forExtension: The file extension for which to determine the mime type.
+///
 /// - Returns: The string representing the mime type, or nil if no match could be made.
 
 public func mimeType(forExtension: String) -> String? {
