@@ -12,7 +12,11 @@ Note: Planned releases are for information only and subject to change without no
 
 - To accompany Swiftfire 1.0.0
 
-#### 0.0.4 (Current)
+#### 0.1.0 (Current)
+
+- Migrated to SPM 4
+
+#### 0.0.4
 
 - Rewrote initializer for Request
 - Renamed 'payload' to 'body'
