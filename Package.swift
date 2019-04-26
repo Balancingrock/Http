@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "Http", targets: ["Http"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Balancingrock/Ascii", from: "1.1.0")
+        .package(url: "https://github.com/Balancingrock/Ascii", from: "1.4.0")
     ],
     targets: [
         .target(

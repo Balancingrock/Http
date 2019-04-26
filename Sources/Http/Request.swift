@@ -3,12 +3,11 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    0.0.5
+//  Version:    0.2.0
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
 //  Website:    http://swiftfire.nl/
-//  Blog:       http://swiftrien.blogspot.com
 //  Git:        https://github.com/Balancingrock/Swiftfire
 //
 //  Copyright:  (c) 2017 Marinus van der Lugt, All rights reserved.
@@ -33,12 +32,7 @@
 //
 //  If you like to pay in another way, please contact me at rien@balancingrock.nl
 //
-//  (It is always a good idea to visit the website/blog/google to ensure that you actually pay me and not some imposter)
-//
-//  For private and non-profit use the suggested price is the price of 1 good cup of coffee, say $4.
-//  For commercial use the suggested price is the price of 1 good meal, say $20.
-//
-//  You are however encouraged to pay more ;-)
+//  (It is always a good idea to visit the website to ensure that you actually pay me and not some imposter)
 //
 //  Prices/Quotes for support, modifications or enhancements can be obtained from: rien@balancingrock.nl
 //
@@ -48,6 +42,7 @@
 //
 // History
 //
+// 0.2.0 - Migrated to Swift 5
 // 0.0.5 - Improved documentation
 // 0.0.4 - Rewrote the initializer
 //         Renamed payload to body
@@ -165,12 +160,12 @@ public final class Request: CustomStringConvertible {
     
     /// The end-of-line sequence
     
-    public static let endOfLineSequence = Data(bytes: [Ascii._CR, Ascii._LF])
+    public static let endOfLineSequence = Data([Ascii._CR, Ascii._LF])
     
     
     /// The end-of-header sequence
     
-    public static let endOfHeaderSequence = Data(bytes: [Ascii._CR, Ascii._LF, Ascii._CR, Ascii._LF])
+    public static let endOfHeaderSequence = Data([Ascii._CR, Ascii._LF, Ascii._CR, Ascii._LF])
     
     
     /// The lines in the header
