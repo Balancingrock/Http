@@ -12,7 +12,12 @@ Note: Planned releases are for information only and subject to change without no
 
 - To accompany Swiftfire 1.0.0
 
-#### 0.2.0 (Current)
+#### 0.2.1 (Current)
+
+- Header updates
+- Removed assert statements
+
+#### 0.2.0
 
 - Migrated to Swift 5
 
