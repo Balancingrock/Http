@@ -3,7 +3,7 @@
 //  File:       Http.swift
 //  Project:    Http
 //
-//  Version:    0.2.1
+//  Version:    0.2.2
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,6 +36,7 @@
 //
 // History
 //
+// 0.2.2 - Added mime type text/html for php
 // 0.2.1 - Updated header
 // 0.0.5 - Added comments
 // 0.0.2 - Added mime types
@@ -212,6 +213,7 @@ fileprivate let mimeMap: Dictionary<String, String> = [
     "pdf" : "application/pdf",
     "pfx" : "application/x-pkcs12",
     "pgm" : "image/x-portable-graymap",
+    "php" : "text/html",
     "pko" : "application/ynd.ms-pkipko",
     "pma" : "application/x-perfmon",
     "pmc" : "application/x-perfmon",

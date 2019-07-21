@@ -12,7 +12,11 @@ Note: Planned releases are for information only and subject to change without no
 
 - To accompany Swiftfire 1.0.0
 
-#### 0.2.1 (Current)
+#### 0.2.2 (Current)
+
+- Added mime type text.html for php extensions
+
+#### 0.2.1
 
 - Header updates
 - Removed assert statements
