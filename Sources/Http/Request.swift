@@ -3,12 +3,12 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    0.2.1
+//  Version:    1.0.0
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
-//  Website:    http://swiftfire.nl/
-//  Git:        https://github.com/Balancingrock/Swiftfire
+//  Website:    http://swiftfire.nl/projects/http/http.html
+//  Git:        https://github.com/Balancingrock/Http
 //
 //  Copyright:  (c) 2017..2019 Marinus van der Lugt, All rights reserved.
 //
@@ -36,13 +36,7 @@
 //
 // History
 //
-// 0.2.1 - Updated header
-// 0.2.0 - Migrated to Swift 5
-// 0.0.5 - Improved documentation
-// 0.0.4 - Rewrote the initializer
-//         Renamed payload to body
-// 0.0.3 - Renamed 'Operation' to 'Method'
-// 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
+// 1.0.0 - Removed older history
 // =====================================================================================================================
 
 import Foundation

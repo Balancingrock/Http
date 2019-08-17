@@ -6,7 +6,7 @@ module: Http
 hide_documentation_coverage: true
 xcodebuild_arguments: [-target, Http]
 github_url: https://github.com/Balancingrock/Http
-output: ~/Documents/Websites/sf/projects/http/reference
+output: ~/Documents/Websites/swiftfire.nl/projects/http/reference
 clean: true
 theme: fullwidth
 readme: README.md

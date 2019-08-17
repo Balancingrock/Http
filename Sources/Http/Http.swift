@@ -3,12 +3,12 @@
 //  File:       Http.swift
 //  Project:    Http
 //
-//  Version:    0.2.2
+//  Version:    1.0.0
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
-//  Website:    http://swiftfire.nl/
-//  Git:        https://github.com/Balancingrock/Swiftfire
+//  Website:    http://swiftfire.nl/projects/http/http.html
+//  Git:        https://github.com/Balancingrock/Http
 //
 //  Copyright:  (c) 2017..2019 Marinus van der Lugt, All rights reserved.
 //
@@ -36,11 +36,7 @@
 //
 // History
 //
-// 0.2.2 - Added mime type text/html for php
-// 0.2.1 - Updated header
-// 0.0.5 - Added comments
-// 0.0.2 - Added mime types
-// 0.0.1 - Initial release, spun out from Swiftfire 0.10.8
+// 1.0.0 - Removed older history
 // =====================================================================================================================
 
 import Foundation
