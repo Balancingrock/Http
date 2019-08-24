@@ -3,7 +3,7 @@
 //  File:       Host.swift
 //  Project:    Http
 //
-//  Version:    1.0.0
+//  Version:    1.0.1
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,7 +36,9 @@
 //
 // History
 //
+// 1.0.1 - Documentation update
 // 1.0.0 - Removed older history
+//
 // =====================================================================================================================
 
 import Foundation
@@ -76,7 +78,7 @@ public struct Host: Equatable, CustomStringConvertible {
     public var description: String { return address + (port == nil ? "" : ":\(port!)") }
     
     
-    /// Creates a new host.
+    /// Creates a new host structure.
     ///
     /// - Parameters:
     ///   - address: A string with the address of the host.

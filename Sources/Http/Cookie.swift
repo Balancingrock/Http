@@ -3,7 +3,7 @@
 //  File:       Cookie.swift
 //  Project:    Http
 //
-//  Version:    1.0.0
+//  Version:    1.0.1
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,7 +36,9 @@
 //
 // History
 //
+// 1.0.1 - Documentation update
 // 1.0.0 - Removed older history
+//
 // =====================================================================================================================
 
 import Foundation
@@ -111,7 +113,7 @@ public final class Cookie: CustomStringConvertible {
     public let httpOnly: Bool?
     
     
-    /// Create a new cookie from the given values.
+    /// Creates a new cookie object.
     ///
     /// - Note: The name and value parameters are not checked on validity. Be sure to use only valid characters in the strings.
     ///
@@ -228,7 +230,7 @@ public final class Cookie: CustomStringConvertible {
     }
     
     
-    /// - Returns: an expired "copy" of self.
+    /// - Returns: An expired "copy" of self.
     
     public func expired() -> Cookie {
         let invalidDate = Date().addingTimeInterval(TimeInterval(-24*60*60))

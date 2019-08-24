@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    1.0.0
+//  Version:    1.0.1
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,7 +36,9 @@
 //
 // History
 //
+// 1.0.1 - Documentation update
 // 1.0.0 - Removed older history
+//
 // =====================================================================================================================
 
 import Foundation
@@ -51,15 +53,44 @@ public final class Request: CustomStringConvertible {
     /// The available methods.
     
     public enum Method: String {
+        
+        
+        /// A GET request
+        
         case get = "GET"
+        
+        
+        /// A HEAD request
+        
         case head = "HEAD"
+        
+        
+        /// A POST request
+        
         case post = "POST"
+        
+        
+        /// A PUT request
+        
         case put = "PUT"
+        
+        
+        /// A DELETE request
+        
         case delete = "DELETE"
+        
+        
+        /// A TRACE request
+        
         case trace = "TRACE"
+        
+        
+        /// A CONNECT request
+        
         case connect = "CONNECT"
         
-        // If operations are added, be sure to include them in "allValues".
+        
+        /// If operations are added, be sure to include them in "allValues".
         
         public static let all: Array<Method> = [.get, .head, .post, .put, .delete, .trace, .connect]
     }
@@ -69,35 +100,154 @@ public final class Request: CustomStringConvertible {
     
     public enum Field: String {
         
+        
+        /// The ACCEPT header field
+        
         case accept                 = "Accept"
+        
+        
+        /// The ACCEPT CHARACTERSET header field
+        
         case acceptCharset          = "Accept-Charset"
+        
+        
+        /// The ACCEPT ENCODING header field
+        
         case acceptEncoding         = "Accept-Encoding"
+        
+        
+        /// The ACCEPT LANGUAGE header field
+        
         case acceptLanguage         = "Accept-Language"
+        
+        
+        /// The ACCEPT DATETIME header field
+        
         case acceptDatetime         = "Accept-Datetime"
+        
+        
+        /// The CACHE CONTROL header field
+        
         case cacheControl           = "Cache-Control"
+        
+        
+        /// The CONNECTION header field
+        
         case connection             = "Connection"
+        
+        
+        /// The COOKIE header field
+        
         case cookie                 = "Cookie"
+        
+        
+        /// The CONTENT LENGTH header field
+        
         case contentLength          = "Content-Length"
+        
+        
+        /// The CONTENT MD5 header field
+       
         case contentMd5             = "Content-MD5"
+        
+        
+        /// The CONTENT TYPE header field
+        
         case contentType            = "Content-Type"
+        
+        
+        /// The DATE header field
+        
         case date                   = "Date"
+        
+        
+        /// The EXPECT header field
+        
         case expect                 = "Expect"
+        
+        
+        /// The FROM header field
+        
         case from                   = "From"
+        
+        
+        /// The HOST header field
+        
         case host                   = "Host"
+        
+        
+        /// The IF MATCH header field
+        
         case ifMatch                = "If-Match"
+        
+        
+        /// The IF MODIFIED SINCE header field
+        
         case ifModifiedSince        = "If-Modified-Since"
+        
+        
+        /// The IF NONE MATCH header field
+        
         case ifNoneMatch            = "If-None-Match"
+        
+        
+        /// The IF RANGE header field
+        
         case ifRange                = "If-Range"
+        
+        
+        /// The IF UNMODIFIED RANGE header field
+        
         case ifUnmodifiedRange      = "If-Unmodified-Since"
+        
+        
+        /// The MAX FORWARDS header field
+        
         case maxForwards            = "Max-Forwards"
+        
+        
+        /// The ORIGIN header field
+        
         case origin                 = "Origin"
+        
+        
+        /// The PRAGMA header field
+        
         case pragma                 = "Pragma"
+        
+        
+        /// The PROXY AUTHORIZATION header field
+        
         case proxyAuthorization     = "Proxy-Authorization"
+        
+        
+        /// The RANGE header field
+        
         case range                  = "Range"
+        
+        
+        /// The REFERER header field
+        
         case referer                = "Referer"
+        
+        
+        /// The TE header field
+        
         case te                     = "TE"
+        
+        
+        /// The USER AGENT header field
+        
         case userAgent              = "User-Agent"
+        
+        
+        /// The UPGRADE header field
+        
         case upgrade                = "Upgrade"
+        
+        
+        /// The WARNING header field
+        
         case warning                = "Warning"
         
         
@@ -189,7 +339,7 @@ public final class Request: CustomStringConvertible {
     }
     
     
-    /// Deserialises a new Request from the given data if the data contains a complete header. Otherwise returns nil. Removes any data that was used to create the request.
+    /// Creates a new request object from the given data if the data contains a complete header. Otherwise returns nil. Removes any data that was used to create the request.
     ///
     /// The body will contain the available data, but may be incomplete if the data is insufficient. Compare the contentLength with the body.count to verify if the body is complete or not.
     ///
@@ -240,7 +390,7 @@ public final class Request: CustomStringConvertible {
     }
     
     
-    // Create and return a copy from self
+    /// Create and return a copy from self
     
     public var copy: Request {
         let cp = Request(lines: self.lines, headerLength: self.headerLength)

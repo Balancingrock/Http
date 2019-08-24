@@ -3,7 +3,7 @@
 //  File:       HttpVersion.swift
 //  Project:    Http
 //
-//  Version:    1.0.0
+//  Version:    1.0.1
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,7 +36,9 @@
 //
 // History
 //
+// 1.0.1 - Documentation update
 // 1.0.0 - Removed older history
+//
 // =====================================================================================================================
 
 import Foundation
@@ -45,12 +47,24 @@ import Foundation
 /// This enum encodes the different versions of the HTTP protocol
 
 public enum Version: String {
+
+    
+    /// HTTP protocol version 1.0
     
     case http1_0 = "HTTP/1.0"
+    
+    
+    /// HTTP protocol version 1.1
+    
     case http1_1 = "HTTP/1.1"
+    
+    
+    /// HTTP protocol version 1.x
+    
     case http1_x = "HTTP/1.x"
     
-    // If operations are added, be sure to include them in "all".
+    
+    /// If operations are added, be sure to include them in "all".
     
     public static let all: Array<Version> = [.http1_0, .http1_1, .http1_x]
 }

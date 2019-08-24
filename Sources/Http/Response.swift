@@ -3,7 +3,7 @@
 //  File:       HttpResponse.swift
 //  Project:    Http
 //
-//  Version:    1.0.0
+//  Version:    1.0.1
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,7 +36,9 @@
 //
 // History
 //
+// 1.0.1 - Updated documentation
 // 1.0.0 - Removed older history
+//
 // =====================================================================================================================
 
 import Foundation
@@ -163,7 +165,7 @@ public final class Response: CustomStringConvertible {
         case _305_UseProxy = "305 Use Proxy"
         
         
-        // The 306 status code was used in a previous version of the specification, is no longer used, and the code is reserved.
+        /// The 306 status code was used in a previous version of the specification, is no longer used, and the code is reserved.
         
         case _306_Unused =  "306 (Unused)"
         
@@ -309,7 +311,7 @@ public final class Response: CustomStringConvertible {
     public static let docTypeHtml401Transitional = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"
     
     
-    /// Creates a new Response.
+    /// Creates a new Response object.
     
     public init() {}
     
