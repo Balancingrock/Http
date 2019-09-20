@@ -16,6 +16,10 @@ This library is part of the [Swiftfire](http://swiftfire.nl) project
 
 No new features planned. Updates are made on an ad-hoc basis as needed to support Swiftfire development.
 
+#### 1.1.0
+
+- Added `resourcePath`, `resourcePathParts` and `urlNameValuePairs`
+
 #### 1.0.0
 
 - To accompany Swiftfire 1.0.0

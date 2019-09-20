@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    1.0.1
+//  Version:    1.1.0
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,6 +36,7 @@
 //
 // History
 //
+// 1.1.0 - Added resourcePath, resourcePathParts and urlNameValuePairs
 // 1.0.1 - Documentation update
 // 1.0.0 - Removed older history
 //
@@ -459,7 +460,7 @@ public final class Request: CustomStringConvertible {
     }()
     
     
-    /// Returns the URL or nil if none present
+    /// Returns the original URL in the request or nil if none present
 
     public lazy var url: String? = {
     
@@ -472,6 +473,114 @@ public final class Request: CustomStringConvertible {
         
         return nil
     }()
+    
+    
+    /// Returns the resource path of the URL
+    
+    public lazy var resourcePath: String? = {
+        if _resourcePath == nil {
+            processRawUrl(url)
+        }
+        return _resourcePath
+    }()
+
+    fileprivate var _resourcePath: String?
+    
+    
+    /// Returns the path parts of the resource path part of the URL
+    
+    public lazy var resourcePathParts: Array<String> = {
+        if _resourcePathParts == nil {
+            processRawUrl(url)
+        }
+        return _resourcePathParts ?? []
+    }()
+    
+    fileprivate var _resourcePathParts: Array<String>?
+    
+    
+    /// Returns the name/value parts of the raw URL (if any)
+    
+    public lazy var urlNameValuePairs: Dictionary<String, String> = {
+        if _urlNameValuePairs == nil {
+            processRawUrl(url)
+        }
+        return _urlNameValuePairs ?? [:]
+    }()
+    
+    fileprivate var _urlNameValuePairs: Dictionary<String, String>?
+    
+    
+    /// Returns the path parts of the requested URL
+    
+    fileprivate func processRawUrl(_ rawurl: String?) {
+        
+        
+        // If there is no url then return an empty array
+        
+        guard let rawurl = url else { return }
+        
+        
+        // If there is no questionmark, it is a simple resource url
+        
+        if rawurl.contains("?") {
+            
+            
+            // Split the path into two parts, before and after the questionmark
+            
+            var parts = rawurl.components(separatedBy: "?")
+            
+            
+            // Set the path and its parts
+            
+            _resourcePath = String(parts[0])
+            _resourcePathParts = parts[0].split(separator: "/").map({ String($0) })
+
+            
+            // Get the name/value pairs (if possible)
+            
+            if parts.count > 1 {
+            
+                
+                // Reassemble the name/value pairs
+                
+                parts.removeFirst()
+                var nameValuePairsStr = parts.removeFirst()
+                parts.forEach( { nameValuePairsStr.append("?" + $0) } )
+
+                
+                // Extract the name/value pairs
+            
+                _urlNameValuePairs = [:]
+            
+                var nameValuePairs = nameValuePairsStr.components(separatedBy: "&")
+            
+                while nameValuePairs.count > 0 {
+                    var nameValue = nameValuePairs.removeFirst().components(separatedBy: "=")
+                    switch nameValue.count {
+                    case 0: break // error, don't do anything
+                    case 1: _urlNameValuePairs![nameValue[0]] = ""
+                    case 2: _urlNameValuePairs![nameValue[0]] = nameValue[1]
+                    default:
+                        let name = nameValue.removeFirst()
+                        _urlNameValuePairs![name] = nameValue.joined(separator: "=")
+                    }
+                }
+                
+            } else {
+
+                // There are no name/value pairs
+                
+                _urlNameValuePairs = [:]
+            }
+
+        } else {
+            
+            _resourcePath = rawurl
+            _resourcePathParts = rawurl.split(separator: "/").map({ String($0) })
+            _urlNameValuePairs = [:]
+        }
+    }
     
     
     /// Returns the version of the http header or nil if it cannot be found
