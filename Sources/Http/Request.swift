@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    1.1.0
+//  Version:    1.1.1
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,6 +36,7 @@
 //
 // History
 //
+// 1.1.1 - Renamed urlNameValuePairs to getInfo
 // 1.1.0 - Added resourcePath, resourcePathParts and urlNameValuePairs
 // 1.0.1 - Documentation update
 // 1.0.0 - Removed older history
@@ -501,7 +502,7 @@ public final class Request: CustomStringConvertible {
     
     /// Returns the name/value parts of the raw URL (if any)
     
-    public lazy var urlNameValuePairs: Dictionary<String, String> = {
+    public lazy var getInfo: Dictionary<String, String> = {
         if _urlNameValuePairs == nil {
             processRawUrl(url)
         }
