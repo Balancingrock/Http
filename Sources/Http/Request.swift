@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    1.1.1
+//  Version:    1.2.0
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,6 +36,7 @@
 //
 // History
 //
+// 1.2.0 - Added postInfo and info
 // 1.1.1 - Renamed urlNameValuePairs to getInfo
 // 1.1.0 - Added resourcePath, resourcePathParts and urlNameValuePairs
 // 1.0.1 - Documentation update
@@ -500,9 +501,11 @@ public final class Request: CustomStringConvertible {
     fileprivate var _resourcePathParts: Array<String>?
     
     
-    /// Returns the name/value parts of the raw URL (if any)
+    /// Returns the name/value parts in the raw URL (if any). Also note that getInfo is present (and empty) even for requests that do not contain this type of data.
+    ///
+    /// Note: The method should be GET, but this is _not_ checked.
     
-    public lazy var getInfo: Dictionary<String, String> = {
+    public private(set) lazy var getInfo: Dictionary<String, String> = {
         if _urlNameValuePairs == nil {
             processRawUrl(url)
         }
@@ -721,5 +724,61 @@ public final class Request: CustomStringConvertible {
         }
         
         return arr
+    }()
+    
+    
+    /// Returns the name/value pairs in the body for application/x-www-form-urlencoding encoded forms in a POST method. Note that postInfo is present (and empty) even for requests that do not contain this type of data.
+    ///
+    /// Note: There are no checks performed prior to the extraction attempt. If important, the user should perform these tests. Specifically it is assumed that:
+    ///
+    /// a) All body data has been received and is present in _body_
+    ///
+    /// b) The method is _POST_
+    ///
+    /// c) The encoding is _application/x-www-form-urlencoding_
+    
+    public private(set) lazy var postInfo: Dictionary<String, String> = {
+        
+        
+        // Check for data
+        
+        guard let strData = body, !strData.isEmpty, let str = String.init(data: strData, encoding: String.Encoding.utf8) else {
+            return [:]
+        }
+        
+        
+        // Split into multiple name/value pairs
+        
+        var postInfo: Dictionary<String, String> = [:]
+        
+        var nameValuePairs = str.components(separatedBy: "&")
+        
+        while nameValuePairs.count > 0 {
+            let nvPair = nameValuePairs.removeFirst()
+            var nameValue = nvPair.components(separatedBy: "=")
+            switch nameValue.count {
+            case 0: break // error, don't do anything
+            case 1: postInfo[nameValue[0]] = ""
+            case 2: postInfo[nameValue[0]] = nameValue[1].removingPercentEncoding?.replacingOccurrences(of: "+", with: " ")
+            default:
+                let name = nameValue.removeFirst()
+                postInfo[name] = nameValue.joined(separator: "=")
+            }
+        }
+        
+        return postInfo
+    }()
+    
+    
+    /// A convenience dictionary that contains both getInfo and postInfo. If duplicate keys are present, the getInfo key's will take priority. Refer to getInfo and postInfo for the constraints on these dictionary (which also apply to this dictionary).
+    ///
+    /// It is possible to add data to this directory, but this data will not be copied to either getInfo nor postInfo nor any other original request field.
+    
+    public lazy var info: Dictionary<String, String> = {
+        var dict = postInfo
+        getInfo.forEach({ ( entry: (key: String, value: String)) in
+            dict[entry.key] = dict[entry.value]
+        })
+        return dict
     }()
 }
