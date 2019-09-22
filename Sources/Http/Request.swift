@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    1.2.0
+//  Version:    1.2.1
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,6 +36,7 @@
 //
 // History
 //
+// 1.2.1 - Removed warning in Xcode 11
 // 1.2.0 - Added postInfo and info
 // 1.1.1 - Renamed urlNameValuePairs to getInfo
 // 1.1.0 - Added resourcePath, resourcePathParts and urlNameValuePairs
@@ -428,7 +429,7 @@ public final class Request: CustomStringConvertible {
         
         var dict: Dictionary<String, String> = [:]
         
-        var nameValuePairs = str.components(separatedBy: "&")
+        let nameValuePairs = str.components(separatedBy: "&")
         
         while nameValuePairs.count > 0 {
             var nameValue = nameValuePairs[0].components(separatedBy: "=")

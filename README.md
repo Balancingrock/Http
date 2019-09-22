@@ -17,6 +17,10 @@ This library is part of the [Swiftfire](http://swiftfire.nl) project
 No new features planned. Updates are made on an ad-hoc basis as needed to support Swiftfire development.
 
 
+#### 1.2.1
+
+- Removed warning in Xcode 11
+
 #### 1.2.0
 
 - Added `postInfo` and `info`
