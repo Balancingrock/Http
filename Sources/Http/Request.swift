@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    1.2.1
+//  Version:    1.2.2
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,6 +36,7 @@
 //
 // History
 //
+// 1.2.2 - Bugfix, getInfo now appears correctly in info.
 // 1.2.1 - Removed warning in Xcode 11
 // 1.2.0 - Added postInfo and info
 // 1.1.1 - Renamed urlNameValuePairs to getInfo
@@ -778,7 +779,7 @@ public final class Request: CustomStringConvertible {
     public lazy var info: Dictionary<String, String> = {
         var dict = postInfo
         getInfo.forEach({ ( entry: (key: String, value: String)) in
-            dict[entry.key] = dict[entry.value]
+            dict[entry.key] = entry.value
         })
         return dict
     }()
