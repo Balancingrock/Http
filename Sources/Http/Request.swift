@@ -3,7 +3,7 @@
 //  File:       Request.swift
 //  Project:    Http
 //
-//  Version:    1.2.2
+//  Version:    1.2.3
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
@@ -36,6 +36,7 @@
 //
 // History
 //
+// 1.2.3 - Keys from getInfo and postInfo lowercased before adding to info.
 // 1.2.2 - Bugfix, getInfo now appears correctly in info.
 // 1.2.1 - Removed warning in Xcode 11
 // 1.2.0 - Added postInfo and info
@@ -777,9 +778,12 @@ public final class Request: CustomStringConvertible {
     /// It is possible to add data to this directory, but this data will not be copied to either getInfo nor postInfo nor any other original request field.
     
     public lazy var info: Dictionary<String, String> = {
-        var dict = postInfo
+        var dict: Dictionary<String, String> = [:]
+        postInfo.forEach({ ( entry: (key: String, value: String)) in
+            dict[entry.key.lowercased()] = entry.value
+        })
         getInfo.forEach({ ( entry: (key: String, value: String)) in
-            dict[entry.key] = entry.value
+            dict[entry.key.lowercased()] = entry.value
         })
         return dict
     }()
