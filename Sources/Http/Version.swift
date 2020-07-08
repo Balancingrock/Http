@@ -3,25 +3,18 @@
 //  File:       HttpVersion.swift
 //  Project:    Http
 //
-//  Version:    1.0.1
+//  Version:    1.2.4
 //
 //  Author:     Marinus van der Lugt
 //  Company:    http://balancingrock.nl
 //  Website:    http://swiftfire.nl/projects/http/http.html
 //  Git:        https://github.com/Balancingrock/Http
 //
-//  Copyright:  (c) 2017..2019 Marinus van der Lugt, All rights reserved.
+//  Copyright:  (c) 2017-2020 Marinus van der Lugt, All rights reserved.
 //
-//  License:    Use or redistribute this code any way you like with the following two provision:
+//  License:    MIT, see LICENSE file
 //
-//  1) You ACCEPT this source code AS IS without any guarantees that it will work as intended. Any liability from its
-//  use is YOURS.
-//
-//  2) You WILL NOT seek damages from the author or balancingrock.nl.
-//
-//  I also ask you to please leave this header with the source code.
-//
-//  Like you, I need to make a living:
+//  And because I need to make a living:
 //
 //   - You can send payment (you choose the amount) via paypal to: sales@balancingrock.nl
 //   - Or wire bitcoins to: 1GacSREBxPy1yskLMc9de2nofNv2SNdwqH
@@ -36,6 +29,7 @@
 //
 // History
 //
+// 1.2.4 - Updated LICENSE
 // 1.0.1 - Documentation update
 // 1.0.0 - Removed older history
 //
